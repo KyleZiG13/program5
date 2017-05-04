@@ -58,22 +58,23 @@ public class List<E> extends csc220.list.List<E> {
                 }
         @Override
         public void remove() {
-            Node<E> tmp = new Node<>();
-            while(tmp != prevNode){
-                tmp = prevNode;
+            if ( prevNode == null){
+                throw new IllegalStateException();
             }
-            if(prevNode == nextNode){
-                tmp.next = nextNode;
-                prevNode = null;
-            }
-            if (first == prevNode){
-                first = nextNode;
-                prevNode = null;
-            }
-            if(last == prevNode){
-                last = nextNode;
-                prevNode = null; 
-            }
+             if (prevNode == first){
+                 first = nextNode;
+             }
+             else{
+                 Node<E> tmp = first;
+                    while(tmp.next != prevNode){
+                        tmp = tmp.next;
+                    }
+                    tmp.next = nextNode;
+             }
+             if(prevNode == last){
+                 last = prevNode;
+             }
+             prevNode = null;
         }
      }
    
